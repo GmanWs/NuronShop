@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrowTopia Shopping</title>
+
+    <style>
+        /* Genel Ayarlar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Üst kısım, içerik ve alt kısmı ayırma */
+            background: linear-gradient(to right, #7ec8e3, #1e3c58); /* Hafif mavi ve koyu mavi karışımı */
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Yaprak Düşüşü */
+        .leaf {
+            position: absolute;
+            top: -50px; /* Başlangıçta ekranın üst kısmı */
+            opacity: 0.3; /* Yaprakların şeffaf olması için opaklık ayarı */
+            pointer-events: none;
+            animation: fall 7s infinite linear; /* Daha hızlı düşüş (7 saniye) */
+            z-index: 1000;
+        }
+
+        /* Yaprak Düşme Animasyonu */
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg); /* Başlangıçta yerinde */
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg); /* Yapraklar düşer ve döner */
+                opacity: 0.2; /* Düşerken şeffaflık daha da azalır */
+            }
+        }
+
+        /* Navbar */
+        nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            padding: 0 15px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+        }
+
+        /* Sayfa İçeriği */
+        .container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 60px; /* Navbar'ın üst kısmına çakışmasını engellemek için */
+        }
+
+        /* Hover efektli Logo */
+        .logo {
+            width: 300px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        /* "PRODUCTS" başlığı altına eklenen stil */
+        .products-heading {
+            font-size: 40px;
+            font-weight: bold;
+            color: #ff4d4d; /* Kırmızımsı renk */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Siyah gölge efekti */
+            margin-top: 30px;
+        }
+
+        /* Ürünler Kutusu */
+        .products {
+            display: none;
+            flex-direction: row;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .product {
+            width: 200px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .product img:hover {
+            transform: scale(1.05);
+        }
+
+        .product h3 {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .product a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .product a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            color: #7289da;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#products" id="productsLink">Products</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="container">
+        <!-- Logo -->
+        <img src="logo.jpg" alt="GrowTopia Shopping Logo" class="logo" id="logo">
+
+        <!-- "PRODUCTS" Başlığı -->
+        <div class="products-heading">
+            PRODUCTS
+        </div>
+
+        <!-- Etkin Ürünler Başlığı -->
+        <h2 id="productsTitle" style="display: none;">Actives</h2>
+
+        <!-- Ürünler Kutusu -->
+        <div class="products" id="products">
+            <div class="product">
+                <img src="cid-image.jpg" alt="Buy Cid">
+                <h3>Buy Cid</h3>
+                <a href="cid.html">Buy</a>
+            </div>
+
+            <div class="product">
+                <img src="lucifer-image.jpg" alt="Buy Lucifer">
+                <h3>Buy Lucifer</h3>
+                <a href="lucifer.html">Buy</a>
+            </div>
+
+            <div class="product">
+                <img src="diamondlock-image.jpg" alt="Buy Diamondlock">
+                <h3>Buy Diamondlock</h3>
+                <a href="diamondlock.html">Buy</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yapraklar için container -->
+    <div id="leaves"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 GrowTopia Official Nuron Shop - DEMO</p>
+        <p>Follow us on <a href="https://discord.gg/nuron" target="_blank">Discord</a>.</p>
+    </footer>
+
+    <script>
+        // Logoya tıklayınca ürünleri gösteren fonksiyon
+        document.getElementById("logo").onclick = function() {
+            document.getElementById("logo").style.display = "none";
+            document.getElementById("productsTitle").style.display = "block";
+            document.getElementById("products").style.display = "flex";
+
+            setTimeout(function() {
+                document.getElementById("products").style.opacity = "1";
+            }, 100);
+        }
+
+        // Products kısmına tıklanınca sayfanın o kısmına kaymasını sağlayan fonksiyon
+        document.querySelector('a[href="#products"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById("products").scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Dinamik olarak yaprak ekleme
+        function createLeaf() {
+            const leaf = document.createElement("div");
+            leaf.classList.add("leaf");
+            leaf.style.left = Math.random() * 100 + "%";  // Yaprağın sağa sola rastgele konumlanması
+            leaf.style.animationDuration = (Math.random() * 7 + 4) + "s";  // Hızlı düşüş (4-10 saniye arası)
+            leaf.style.animationDelay = Math.random() * 2 + "s";  // Rastgele başlama zamanı (0-2 saniye arası)
+            leaf.style.backgroundImage = "url('leaf-fall.jpg')";  // Yaprak JPG
+            leaf.style.backgroundSize = "contain";
+            leaf.style.backgroundRepeat = "no-repeat";
+            leaf.style.height = "50px";  // Yaprak boyutunu ayarlıyoruz
+            leaf.style.width = "50px";   // Yaprak boyutunu ayarlıyoruz
+            document.getElementById("leaves").appendChild(leaf);
+
+            // Yaprak tamamlandığında (düştüğünde) DOM'dan silme
+            leaf.addEventListener('animationend', () => {
+                leaf.remove();
+            });
+        }
+
+        // Sayfa yüklendikçe 0.5 saniyede bir yeni yaprak ekleme
+        setInterval(createLeaf, 500);
+
+        // Mouse tıklama efektini ekleyelim (Patlama etkisi)
+        document.body.addEventListener("click", function(event) {
+            var burst = document.createElement("div");
+            burst.style.position = "absolute";
+            burst.style.left = event.pageX - 50 + "px";  // Tıklama noktasının etrafında patlama
+            burst.style.top = event.pageY - 50 + "px";
+            burst.style.width = "100px";
+            burst.style.height = "100px";
+            burst.style.borderRadius = "50%";
+            burst.style.background = "radial-gradient(circle, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 100%)";
+            burst.style.transform = "scale(0)";
+            burst.style.pointerEvents = "none";
+            burst.style.opacity = "0.6";
+            burst.style.transition = "transform 0.5s ease-out, opacity 0.5s";
+            document.body.appendChild(burst);
+
+            setTimeout(function() {
+                burst.style.transform = "scale(1)";
+                burst.style.opacity = "0";
+            }, 10);
+
+            setTimeout(function() {
+                burst.remove();
+            }, 500);  // Etkisi bittikten sonra patlamayı kaldırma
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
