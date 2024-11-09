@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrowTopia Shopping</title>
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Alfa+Slab+One&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
         /* Genel Ayarlar */
         * {
@@ -14,12 +17,12 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Üst kısım, içerik ve alt kısmı ayırma */
-            background: linear-gradient(to right, #7ec8e3, #1e3c58); /* Hafif mavi ve koyu mavi karışımı */
+            justify-content: space-between;
+            background: linear-gradient(to right, #7ec8e3, #1e3c58);
             color: white;
             text-align: center;
             overflow: hidden;
@@ -29,22 +32,35 @@
         /* Yaprak Düşüşü */
         .leaf {
             position: absolute;
-            top: -50px; /* Başlangıçta ekranın üst kısmı */
-            opacity: 0.3; /* Yaprakların şeffaf olması için opaklık ayarı */
+            top: -50px;
+            opacity: 0.5;
             pointer-events: none;
-            animation: fall 7s infinite linear; /* Daha hızlı düşüş (7 saniye) */
+            animation: fall 7s infinite linear, leafGlow 2s infinite ease-in-out;
             z-index: 1000;
         }
 
         /* Yaprak Düşme Animasyonu */
         @keyframes fall {
             0% {
-                transform: translateY(0) rotate(0deg); /* Başlangıçta yerinde */
+                transform: translateY(0) rotate(0deg);
                 opacity: 0.3;
             }
             100% {
-                transform: translateY(100vh) rotate(360deg); /* Yapraklar düşer ve döner */
-                opacity: 0.2; /* Düşerken şeffaflık daha da azalır */
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.2;
+            }
+        }
+
+        /* Yaprakların Parlaması */
+        @keyframes leafGlow {
+            0% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0.5;
             }
         }
 
@@ -64,11 +80,13 @@
             color: white;
             font-size: 1.2em;
             padding: 0 15px;
-            transition: color 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
         nav a:hover {
             color: #ffcc00;
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7), 0px 0px 15px rgba(255, 255, 255, 0.5);
         }
 
         /* Sayfa İçeriği */
@@ -79,27 +97,40 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            padding-top: 60px; /* Navbar'ın üst kısmına çakışmasını engellemek için */
+            padding-top: 60px;
         }
 
         /* Hover efektli Logo */
         .logo {
             width: 300px;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .logo:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.6);
         }
 
-        /* "PRODUCTS" başlığı altına eklenen stil */
+        /* "PRODUCTS" başlığı */
         .products-heading {
-            font-size: 40px;
+            font-family: 'Alfa Slab One', cursive;
+            font-size: 50px;
             font-weight: bold;
-            color: #ff4d4d; /* Kırmızımsı renk */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Siyah gölge efekti */
+            color: #ff4d4d;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
             margin-top: 30px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        /* "Actives" başlığı */
+        #productsTitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 35px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            opacity: 0;
+            animation: fadeInDown 1s ease-out forwards;
         }
 
         /* Ürünler Kutusu */
@@ -119,23 +150,31 @@
             text-align: center;
             position: relative;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
         .product img {
             width: 100%;
             height: auto;
             border-radius: 8px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .product img:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.4);
         }
 
         .product h3 {
+            font-family: 'Montserrat', sans-serif;
             margin-top: 10px;
             font-size: 1.2em;
             color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .product h3:hover {
+            color: #ffcc00;
         }
 
         .product a {
@@ -146,11 +185,12 @@
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         .product a:hover {
             background-color: #0056b3;
+            transform: scale(1.1);
         }
 
         /* Footer */
@@ -162,6 +202,7 @@
             position: absolute;
             bottom: 0;
             width: 100%;
+            font-family: 'Montserrat', sans-serif;
         }
 
         footer a {
@@ -171,6 +212,72 @@
 
         footer a:hover {
             color: #ffcc00;
+            text-decoration: underline;
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+        }
+
+        /* Animasyonlar */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Daha küçük mobil cihazlar (örneğin, 480px ve altı ekranlar) */
+        @media (max-width: 768px) {
+            .logo {
+                width: 200px;
+            }
+
+            .products-heading {
+                font-size: 32px;
+            }
+
+            .products {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product {
+                width: 80%;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Daha küçük mobil cihazlar (480px ve altı) */
+        @media (max-width: 480px) {
+            .products-heading {
+                font-size: 28px;
+            }
+
+            .product img {
+                width: 100%;
+            }
+
+            .product h3 {
+                font-size: 1em;
+            }
+
+            footer {
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
@@ -192,7 +299,7 @@
             PRODUCTS
         </div>
 
-        <!-- Etkin Ürünler Başlığı -->
+        <!-- "Actives" Başlığı -->
         <h2 id="productsTitle" style="display: none;">Actives</h2>
 
         <!-- Ürünler Kutusu -->
@@ -248,30 +355,28 @@
         function createLeaf() {
             const leaf = document.createElement("div");
             leaf.classList.add("leaf");
-            leaf.style.left = Math.random() * 100 + "%";  // Yaprağın sağa sola rastgele konumlanması
-            leaf.style.animationDuration = (Math.random() * 7 + 4) + "s";  // Hızlı düşüş (4-10 saniye arası)
-            leaf.style.animationDelay = Math.random() * 2 + "s";  // Rastgele başlama zamanı (0-2 saniye arası)
-            leaf.style.backgroundImage = "url('leaf-fall.jpg')";  // Yaprak JPG
+            leaf.style.left = Math.random() * 100 + "%";
+            leaf.style.animationDuration = (Math.random() * 7 + 4) + "s";
+            leaf.style.animationDelay = Math.random() * 2 + "s";
+            leaf.style.backgroundImage = "url('leaf-fall.jpg')";
             leaf.style.backgroundSize = "contain";
             leaf.style.backgroundRepeat = "no-repeat";
-            leaf.style.height = "50px";  // Yaprak boyutunu ayarlıyoruz
-            leaf.style.width = "50px";   // Yaprak boyutunu ayarlıyoruz
+            leaf.style.height = "50px";
+            leaf.style.width = "50px";
             document.getElementById("leaves").appendChild(leaf);
 
-            // Yaprak tamamlandığında (düştüğünde) DOM'dan silme
             leaf.addEventListener('animationend', () => {
                 leaf.remove();
             });
         }
 
-        // Sayfa yüklendikçe 0.5 saniyede bir yeni yaprak ekleme
         setInterval(createLeaf, 500);
 
-        // Mouse tıklama efektini ekleyelim (Patlama etkisi)
+        // Mouse tıklama patlama efekti
         document.body.addEventListener("click", function(event) {
             var burst = document.createElement("div");
             burst.style.position = "absolute";
-            burst.style.left = event.pageX - 50 + "px";  // Tıklama noktasının etrafında patlama
+            burst.style.left = event.pageX - 50 + "px";
             burst.style.top = event.pageY - 50 + "px";
             burst.style.width = "100px";
             burst.style.height = "100px";
@@ -290,7 +395,7 @@
 
             setTimeout(function() {
                 burst.remove();
-            }, 500);  // Etkisi bittikten sonra patlamayı kaldırma
+            }, 500);
         });
     </script>
 
