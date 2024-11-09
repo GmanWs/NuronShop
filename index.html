@@ -21,13 +21,47 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-between;
             background: linear-gradient(to right, #7ec8e3, #1e3c58);
             color: white;
             text-align: center;
             overflow: hidden;
             position: relative;
+        }
+
+        /* Yaprak Düşüşü */
+        .leaf {
+            position: absolute;
+            top: -50px;
+            opacity: 0.5;
+            pointer-events: none;
+            animation: fall 7s infinite linear, leafGlow 2s infinite ease-in-out;
+            z-index: 1000;
+        }
+
+        /* Yaprak Düşme Animasyonu */
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.2;
+            }
+        }
+
+        /* Yaprakların Parlaması */
+        @keyframes leafGlow {
+            0% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0.5;
+            }
         }
 
         /* Navbar */
@@ -63,12 +97,12 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            padding-top: 100px;
+            padding-top: 60px;
         }
 
         /* Hover efektli Logo */
         .logo {
-            width: 250px;
+            width: 300px;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -81,19 +115,28 @@
         /* "PRODUCTS" başlığı */
         .products-heading {
             font-family: 'Alfa Slab One', cursive;
-            font-size: 45px;
+            font-size: 50px;
             font-weight: bold;
             color: #ff4d4d;
             text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
-            margin-top: 20px;
+            margin-top: 30px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        /* "Actives" başlığı */
+        #productsTitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 35px;
+            color: #ffcc00;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            animation: fadeInDown 1s ease-out forwards;
         }
 
         /* Ürünler Kutusu */
         .products {
-            display: flex;
-            flex-wrap: wrap;
+            display: none;
+            flex-direction: row;
             gap: 20px;
             justify-content: center;
             align-items: center;
@@ -103,7 +146,7 @@
         }
 
         .product {
-            width: 220px;
+            width: 200px;
             text-align: center;
             position: relative;
             cursor: pointer;
@@ -156,6 +199,9 @@
             color: white;
             padding: 20px 0;
             text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -193,7 +239,7 @@
             }
         }
 
-        /* Daha küçük mobil cihazlar (örneğin, 768px ve altı ekranlar) */
+        /* Daha küçük mobil cihazlar (örneğin, 480px ve altı ekranlar) */
         @media (max-width: 768px) {
             .logo {
                 width: 200px;
@@ -207,7 +253,6 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                margin-top: 30px;
             }
 
             .product {
@@ -254,6 +299,9 @@
             PRODUCTS
         </div>
 
+        <!-- "Actives" Başlığı -->
+        <h2 id="productsTitle" style="display: none;">Actives</h2>
+
         <!-- Ürünler Kutusu -->
         <div class="products" id="products">
             <div class="product">
@@ -276,6 +324,9 @@
         </div>
     </div>
 
+    <!-- Yapraklar için container -->
+    <div id="leaves"></div>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 GrowTopia Official Nuron Shop - DEMO</p>
@@ -286,12 +337,19 @@
         // Logoya tıklayınca ürünleri gösteren fonksiyon
         document.getElementById("logo").onclick = function() {
             document.getElementById("logo").style.display = "none";
-            document.getElementById("productsHeading").style.opacity = "1";
-            document.getElementById("products").style.opacity = "1";
+            document.getElementById("productsTitle").style.display = "block";
+            document.getElementById("products").style.display = "flex";
+
             setTimeout(function() {
                 document.getElementById("products").style.opacity = "1";
-            }, 200);
+            }, 100);
         }
+
+        // Products kısmına tıklanınca sayfanın o kısmına kaymasını sağlayan fonksiyon
+        document.querySelector('a[href="#products"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById("products").scrollIntoView({ behavior: 'smooth' });
+        });
 
         // Dinamik olarak yaprak ekleme
         function createLeaf() {
@@ -313,6 +371,32 @@
         }
 
         setInterval(createLeaf, 500);
+
+        // Mouse tıklama patlama efekti
+        document.body.addEventListener("click", function(event) {
+            var burst = document.createElement("div");
+            burst.style.position = "absolute";
+            burst.style.left = event.pageX - 50 + "px";
+            burst.style.top = event.pageY - 50 + "px";
+            burst.style.width = "100px";
+            burst.style.height = "100px";
+            burst.style.borderRadius = "50%";
+            burst.style.background = "radial-gradient(circle, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 100%)";
+            burst.style.transform = "scale(0)";
+            burst.style.pointerEvents = "none";
+            burst.style.opacity = "0.6";
+            burst.style.transition = "transform 0.5s ease-out, opacity 0.5s";
+            document.body.appendChild(burst);
+
+            setTimeout(function() {
+                burst.style.transform = "scale(1)";
+                burst.style.opacity = "0";
+            }, 10);
+
+            setTimeout(function() {
+                burst.remove();
+            }, 500);
+        });
     </script>
 
 </body>
