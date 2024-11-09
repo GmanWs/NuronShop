@@ -123,7 +123,7 @@
             animation: fadeInUp 1s ease-out;
         }
 
-        /* "Actives" başlığı */
+        /* "Actives" Başlığı */
         #productsTitle {
             font-family: 'Montserrat', sans-serif;
             font-size: 35px;
@@ -239,14 +239,14 @@
             }
         }
 
-        /* Daha küçük mobil cihazlar (örneğin, 480px ve altı ekranlar) */
-        @media (max-width: 768px) {
+        /* Mobil Uyumlu Tasarım */
+        @media (max-width: 1024px) {
             .logo {
-                width: 200px;
+                width: 250px;
             }
 
             .products-heading {
-                font-size: 32px;
+                font-size: 40px;
             }
 
             .products {
@@ -259,9 +259,30 @@
                 width: 80%;
                 margin-bottom: 20px;
             }
+
+            footer {
+                font-size: 1em;
+            }
         }
 
-        /* Daha küçük mobil cihazlar (480px ve altı) */
+        @media (max-width: 768px) {
+            .logo {
+                width: 200px;
+            }
+
+            .products-heading {
+                font-size: 32px;
+            }
+
+            .product {
+                width: 90%;
+            }
+
+            footer {
+                font-size: 0.9em;
+            }
+        }
+
         @media (max-width: 480px) {
             .products-heading {
                 font-size: 28px;
@@ -276,7 +297,7 @@
             }
 
             footer {
-                font-size: 0.9em;
+                font-size: 0.8em;
             }
         }
     </style>
@@ -401,6 +422,7 @@
 
 </body>
 </html>
+
 
 
 
